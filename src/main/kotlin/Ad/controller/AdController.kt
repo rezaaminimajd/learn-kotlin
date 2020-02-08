@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/event")
 class AdController(private val service: AdService) {
-
+//test git
     @PostMapping("/impression")
     fun getImpression(@RequestBody request: ImpressionEvent): String {
         return service.saveImpressionEvent(request)
