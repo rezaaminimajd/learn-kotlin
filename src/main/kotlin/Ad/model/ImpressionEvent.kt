@@ -6,5 +6,4 @@ data class ImpressionEvent(val requestId: String,
                            val advertiserCost: Double,
                            val appId: String,
                            val appTitle: String,
-                           val impressionTime: Long,
-                           val clickTime: Long)
+                           val impressionTime: Long)

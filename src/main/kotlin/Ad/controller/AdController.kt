@@ -17,6 +17,6 @@ class AdController(private val service: AdService) {
 
     @GetMapping("/click")
     fun getClick(@RequestBody request: ClickEvent): String {
-        return service.saveClickEvent(request)
+        return service.setClickEventTime(request)
     }
 }

@@ -6,4 +6,5 @@ data class AdEvent(val requestId: String,
                    val advertiserCost: Double,
                    val appId: String,
                    val appTitle: String,
-                   val impressionTime: Long)
+                   val impressionTime: Long,
+                   var clickTime: Long)
