@@ -1,4 +1,9 @@
 package Ad.service
 
-class AdService {
+import Ad.repository.AdRepository
+import org.springframework.stereotype.Service
+
+@Service
+class AdService(private val repository: AdRepository) {
+
 }

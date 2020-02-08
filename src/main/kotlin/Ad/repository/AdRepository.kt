@@ -1,4 +1,7 @@
 package Ad.repository
 
-class AdRepository {
+import org.springframework.stereotype.Repository
+
+@Repository
+interface AdRepository {
 }

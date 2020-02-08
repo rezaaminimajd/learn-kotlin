@@ -1,4 +1,9 @@
 package Ad.controller
 
-class AdController {
+import Ad.service.AdService
+import org.springframework.stereotype.Controller
+
+@Controller
+class AdController(private val service: AdService) {
+
 }
