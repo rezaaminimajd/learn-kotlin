@@ -1,20 +1,13 @@
 package Ad.repository
 
 import Ad.model.AdEvent
+import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Repository
 
 @Repository
-class DB(var db: MutableList<AdEvent>) : AdRepository {
-    override fun findAll(): List<AdEvent> {
-        return db
-    }
+class DB(var db: MutableList<AdEvent>) : CommandLineRunner {
+    override fun run(vararg args: String?) {
 
-    override fun insert(adEvent: AdEvent) {
-        db.add(adEvent)
-    }
-
-    override fun saveAll(all: List<AdEvent>) {
-        db = all.toMutableList()
     }
 
 }
