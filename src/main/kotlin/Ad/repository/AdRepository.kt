@@ -3,5 +3,5 @@ package Ad.repository
 import org.springframework.stereotype.Repository
 
 @Repository
-interface AdRepository {
+interface AdRepository: DB {
 }
