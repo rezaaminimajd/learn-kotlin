@@ -4,12 +4,14 @@ import Ad.model.AdEvent
 import Ad.model.ClickEvent
 import Ad.model.ImpressionEvent
 import Ad.repository.AdRepository
+import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
 @Service
 class AdService(private val repository: AdRepository) {
 
     fun saveImpressionEvent(impressionEvent: ImpressionEvent): String {
+
         val adEvent = AdEvent(impressionEvent.requestId,
                 impressionEvent.adId,
                 impressionEvent.adTitle,
