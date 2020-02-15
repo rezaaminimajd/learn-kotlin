@@ -1,10 +1,12 @@
 package Ad.model
 
-import org.springframework.data.cassandra.core.mapping.PrimaryKey
-import org.springframework.data.cassandra.core.mapping.Table
+import org.springframework.data.annotation.Id
+//import org.springframework.data.cassandra.core.mapping.PrimaryKey
+//import org.springframework.data.cassandra.core.mapping.Table
+import org.springframework.data.mongodb.core.mapping.Document
 
-@Table
-data class AdEvent(@PrimaryKey val requestId: String,
+@Document
+data class AdEvent(@Id val requestId: String,
                    val adId: String,
                    val adTitle: String,
                    val advertiserCost: Double,

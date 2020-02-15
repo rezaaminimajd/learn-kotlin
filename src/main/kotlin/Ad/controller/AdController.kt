@@ -14,11 +14,14 @@ class AdController(private val service: AdService) {
 
     @PostMapping("/impression")
     fun getImpression(@RequestBody request: ImpressionEvent): String {
+        println(request.requestId)
+
         return service.saveImpressionEvent(request)
     }
 
     @PostMapping("/click")
     fun getClick(@RequestBody request: ClickEvent): String {
+        println(request.requestId)
         return service.setClickEventTime(request)
     }
 }

@@ -2,10 +2,10 @@ package Ad.repository
 
 import Ad.model.AdEvent
 import org.springframework.boot.CommandLineRunner
-import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Component
 
-@Repository
-class DB(var repository: AdRepository) : CommandLineRunner {
+
+class DB(private val repository: AdRepository) : CommandLineRunner {
     override fun run(vararg args: String?) {
         val a = AdEvent("1",
                 "1",
