@@ -4,14 +4,24 @@ import Ad.model.AdEvent
 import Ad.model.ClickEvent
 import Ad.model.ImpressionEvent
 import Ad.repository.AdRepository
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.ObjectReader
+import com.fasterxml.jackson.module.kotlin.readValue
+import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
 @Service
-class AdService(private val repository: AdRepository) {
+class AdService(private val repository: AdRepository,
+                private val objectReader: ObjectMapper) {
 
-    fun saveImpressionEvent(impressionEvent: ImpressionEvent): String {
+    @KafkaListener(topics = ["task"], groupId = "adEvent")
+    fun saveImpressionEvent(jsonImpressionEvent: String) {
+        println("--------READ--------")
+        println(jsonImpressionEvent)
+        println("--------READ--------")
 
+        val impressionEvent = objectReader.readValue(jsonImpressionEvent, ImpressionEvent::class.java)
         val adEvent = AdEvent(impressionEvent.requestId,
                 impressionEvent.adId,
                 impressionEvent.adTitle,
@@ -21,7 +31,6 @@ class AdService(private val repository: AdRepository) {
                 impressionEvent.impressionTime,
                 0)
         repository.save(adEvent)
-        return "OK 200"
     }
 
     fun setClickEventTime(clickEvent: ClickEvent): String {
@@ -34,6 +43,6 @@ class AdService(private val repository: AdRepository) {
             }
         }
         repository.saveAll(all)
-        return "OK 200"
+        return response
     }
 }

@@ -3,20 +3,21 @@ package Ad.controller
 import Ad.model.ClickEvent
 import Ad.model.ImpressionEvent
 import Ad.service.AdService
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.kafka.core.KafkaTemplate
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/event")
-class AdController(private val service: AdService) {
+class AdController(private val service: AdService,
+                   private val kafkaTemplate: KafkaTemplate<String, String>,
+                   private val objectMapper: ObjectMapper ) {
 
     @PostMapping("/impression")
-    fun getImpression(@RequestBody request: ImpressionEvent): String {
-        println(request.requestId)
-        return service.saveImpressionEvent(request)
+    fun getImpression(@RequestBody request: ImpressionEvent) {
+        val json = objectMapper.writeValueAsString(request)
+        println(json)
+        kafkaTemplate.send("task", json)
     }
 
     @PostMapping("/click")
