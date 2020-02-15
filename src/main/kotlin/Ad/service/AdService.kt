@@ -18,7 +18,7 @@ class AdService(private val repository: AdRepository) {
                 impressionEvent.appTitle,
                 impressionEvent.impressionTime,
                 0)
-        repository.insert(adEvent)
+        repository.save(adEvent)
         return "OK 200"
     }
 
