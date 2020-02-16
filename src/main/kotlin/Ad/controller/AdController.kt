@@ -17,12 +17,13 @@ class AdController(private val service: AdService,
     fun getImpression(@RequestBody request: ImpressionEvent) {
         val json = objectMapper.writeValueAsString(request)
         println(json)
-        kafkaTemplate.send("task", json)
+        kafkaTemplate.send("task", "impression" ,json)
     }
 
     @PostMapping("/click")
-    fun getClick(@RequestBody request: ClickEvent): String {
-        println(request.requestId)
-        return service.setClickEventTime(request)
+    fun getClick(@RequestBody request: ClickEvent) {
+        val json = objectMapper.writeValueAsString(request)
+        println(json)
+        kafkaTemplate.send("task", "click" ,json)
     }
 }
