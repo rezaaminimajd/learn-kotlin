@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/event")
-class AdController(private val service: AdService,
-                   private val kafkaTemplate: KafkaTemplate<String, String>,
+class AdController(private val kafkaTemplate: KafkaTemplate<String, String>,
                    private val objectMapper: ObjectMapper ) {
 
     @PostMapping("/impression")
@@ -26,4 +25,5 @@ class AdController(private val service: AdService,
         println(json)
         kafkaTemplate.send("task", "click" ,json)
     }
+
 }
