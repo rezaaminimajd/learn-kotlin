@@ -42,12 +42,11 @@ class AdService(private val repository: AdRepository,
     }
 
     fun setClickEventTime(clickEvent: ClickEvent) {
-        val all = repository.findAll()
-        all.forEach { ad ->
-            if (ad.requestId == clickEvent.requestId) {
-                ad.clickTime = clickEvent.clickTime
-            }
+        val ad = repository.findAd(clickEvent.requestId)
+        ad?.clickTime = clickEvent.clickTime
+        if (ad != null) {
+            repository.deleteAd(clickEvent.requestId)
+            repository.save(ad)
         }
-        repository.saveAll(all)
     }
 }
