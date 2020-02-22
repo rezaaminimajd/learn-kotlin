@@ -17,10 +17,6 @@ class AdService(private val repository: CassandraRepo,
 
     @KafkaListener(topics = ["task"], groupId = "adEvent")
     fun listener(jsonEvent: String, @Header(KafkaHeaders.RECEIVED_MESSAGE_KEY) key: String) {
-        println("--------READ--------")
-        println("====> key : $key")
-        println(jsonEvent)
-        println("--------READ--------")
         if (key == "impression") {
             val impressionEvent = objectReader.readValue(jsonEvent, ImpressionEvent::class.java)
             saveImpressionEvent(impressionEvent)
