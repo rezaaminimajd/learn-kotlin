@@ -11,13 +11,13 @@ import org.springframework.data.cassandra.repository.config.EnableCassandraRepos
 @Configuration
 class CassandraConfig : AbstractCassandraConfiguration() {
     override fun getKeyspaceName(): String {
-        return "task1"
+        return "reza"
     }
 
     @Bean
     override fun cluster(): CassandraClusterFactoryBean {
         val cluster = CassandraClusterFactoryBean()
-        cluster.setContactPoints("116.203.183.94")
+        cluster.setContactPoints("localhost")
         cluster.setPort(9042)
         return cluster
     }
@@ -26,7 +26,4 @@ class CassandraConfig : AbstractCassandraConfiguration() {
         return SchemaAction.CREATE_IF_NOT_EXISTS
     }
 
-//    override fun getEntityBasePackages(): Array<String> {
-//        return arrayOf("packagename")
-//    }
 }
