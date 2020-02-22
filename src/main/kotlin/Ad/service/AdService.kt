@@ -3,15 +3,16 @@ package Ad.service
 import Ad.model.AdEvent
 import Ad.model.ClickEvent
 import Ad.model.ImpressionEvent
-import Ad.repository.AdRepository
+import Ad.repository.CassandraRepo
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.support.KafkaHeaders
 import org.springframework.messaging.handler.annotation.Header
 import org.springframework.stereotype.Service
 
 @Service
-class AdService(private val repository: AdRepository,
+class AdService(private val repository: CassandraRepo,
                 private val objectReader: ObjectMapper) {
 
     @KafkaListener(topics = ["task"], groupId = "adEvent")
@@ -42,10 +43,9 @@ class AdService(private val repository: AdRepository,
     }
 
     fun setClickEventTime(clickEvent: ClickEvent) {
-        val ad = repository.findAd(clickEvent.requestId)
-        ad?.clickTime = clickEvent.clickTime
+        val ad = repository.findByIdOrNull(clickEvent.requestId)
         if (ad != null) {
-            repository.deleteAd(clickEvent.requestId)
+            ad.clickTime = clickEvent.clickTime
             repository.save(ad)
         }
     }

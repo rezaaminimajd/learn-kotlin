@@ -4,14 +4,14 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.cassandra.config.AbstractCassandraConfiguration
 import org.springframework.data.cassandra.config.CassandraClusterFactoryBean
-import org.springframework.data.cassandra.core.mapping.BasicCassandraMappingContext
-import org.springframework.data.cassandra.core.mapping.CassandraMappingContext
+import org.springframework.data.cassandra.config.SchemaAction
+import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories
 
 
 @Configuration
 class CassandraConfig : AbstractCassandraConfiguration() {
     override fun getKeyspaceName(): String {
-        return "testKeySpace"
+        return "task1"
     }
 
     @Bean
@@ -22,9 +22,11 @@ class CassandraConfig : AbstractCassandraConfiguration() {
         return cluster
     }
 
-    @Bean
-    @Throws(ClassNotFoundException::class)
-    override fun cassandraMapping(): CassandraMappingContext {
-        return BasicCassandraMappingContext()
+    override fun getSchemaAction(): SchemaAction {
+        return SchemaAction.CREATE_IF_NOT_EXISTS
     }
+
+//    override fun getEntityBasePackages(): Array<String> {
+//        return arrayOf("packagename")
+//    }
 }
